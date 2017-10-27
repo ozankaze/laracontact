@@ -44,7 +44,8 @@ class ContactController extends Controller
      */
     public function show($id)
     {
-        //
+        $contact = Contact::findOrFail($id);
+        return view('show', compact('contact'));
     }
 
     /**
@@ -95,9 +96,30 @@ class ContactController extends Controller
  
         return Datatables::of($contact)
         ->addColumn('action', function($contact){
-            return '<a href="#" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a> ' .
+            return '<a href="'. route('contact.show', $contact->id) .'" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a> ' .
                    '<a onclick="editForm('. $contact->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a> ' .
                    '<a onclick="deleteData('. $contact->id .')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
         })->make(true);
+    }
+
+    public function apiHobbiesContact($id)
+    {
+        $data = [];
+        $contact = Contact::findOrFail($id);
+        $hobbies = $contact->hobbies()->get();
+
+        foreach ($hobbies as $row) {
+            $data[] = [
+                'id' => $row->id,
+                'hobby' => $row->hobby
+            ];
+        }
+
+        return Datatables::of($data)
+        ->addColumn('action', function($data){ 
+        return '<a onclick="editForm('. $data['id'] .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a> ' .
+                   '<a onclick="deleteData('. $data['id'] .')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+        })->make(true);
+
     }
 }

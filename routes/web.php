@@ -18,4 +18,8 @@ Route::get('/', function () {
 Route::resource('contact', 'ContactController', [
 	'except' => ['create']
 ]);
+Route::resource('hobby', 'HobbyController', [
+	'except' => ['index', 'create', 'show']
+]);
 Route::get('api/contact', 'ContactController@apiContact')->name('api.contact');
+Route::get('api/hobbies/{id}', 'ContactController@apiHobbiesContact')->name('api.hobbies.contact');
