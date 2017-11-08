@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,3 +25,8 @@ Route::resource('hobby', 'HobbyController', [
 ]);
 Route::get('api/contact', 'ContactController@apiContact')->name('api.contact');
 Route::get('api/hobbies/{id}', 'ContactController@apiHobbiesContact')->name('api.hobbies.contact');
+
+Route::get('/search', function (Request $request) {
+   return $result = App\Contact::search($request->search)->get();
+   return view('result', compact('result'));
+});

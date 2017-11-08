@@ -55,7 +55,10 @@
                 <li><a href="{{ url('/contact') }}">Contact</a></li>
             </ul>
           <ul class="nav navbar-nav navbar-right">
-
+              <form method="GET" action="/search" class="form-inline mt-2 mt-md-0" style="padding-top: 8px;">
+                  <input class="form-control" type="text" name="search" placeholder="Search" aria-label="Search">
+                  <button type="submit" class="btn btn-outline-success" type="submit">Search</button>
+              </form>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
